@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+service SlaughterHouseInfoRetriever
+{
+  rpc getAnimalsFromProduct_A(RequestA) returns (ResponseA);
+  rpc getProductsFromAnimal_B(RequestB) returns (ResponseB);
+}
+message RequestA
+{
+  int32 productId = 1;
+}
+
+message ResponseA
+{
+  repeated Animal animal= 1;
+}
+
+message Animal
+{
+  int64 animalRegNo = 1;
+  string animalType = 2;
+  int32 weightKilos = 3;
+  int32 weightGrams = 4;
+}
+message RequestB
+{
+  int64 regNo = 1;
+}
+message ResponseB
+{
+  repeated Product product=1;
+}
+
+message Product
+{
+  int64 productId=1;
+  string productName=2;
+
+  int32 weightKilo=3;
+  int32 weightGrams=4;
+
+  string packageDate=5;
+  string expirationDate=6;
+}
