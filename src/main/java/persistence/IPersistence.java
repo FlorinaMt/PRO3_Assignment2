@@ -1,3 +1,5 @@
+package persistence;
+
 import model.Animal;
 import model.Product;
 
