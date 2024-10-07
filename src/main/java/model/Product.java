@@ -2,11 +2,11 @@ package model;
 
 public class Product
 {
-  private long productId;
-  private String productName;
-  private int weightKilo;
-  private int weightGrams;
-  private String packageDate, expirationDate;
+  private final long productId;
+  private final String productName;
+  private final int weightKilo;
+  private final int weightGrams;
+  private final String packageDate, expirationDate;
 
   public Product(long productId, String productName, int weightKilo,
       int weightGrams, String packageDate, String expirationDate)

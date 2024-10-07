@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class SlaughterhouseInfoRetrieverImpl
     extends SlaughterHouseInfoRetrieverGrpc.SlaughterHouseInfoRetrieverImplBase
 {
-  private IPersistence persistence;
+  private final SlaughterhouseBase base;
 
-  public SlaughterhouseInfoRetrieverImpl(IPersistence persistence)
+  public SlaughterhouseInfoRetrieverImpl(SlaughterhouseBase base)
   {
-    this.persistence = persistence;
+    this.base=base;
   }
 
   public void getAnimalsFromProductA(RequestA request,
@@ -22,7 +22,7 @@ public class SlaughterhouseInfoRetrieverImpl
   {
     try
     {
-      ArrayList<Animal> animals = persistence.getAnimalsFromProduct(request.getProductId());
+      ArrayList<Animal> animals = base.getAnimalsFromProductA(request.getProductId());
 
       ResponseA.Builder responseBuilder = ResponseA.newBuilder();
 
@@ -34,7 +34,7 @@ public class SlaughterhouseInfoRetrieverImpl
       responseObserver.onNext(response);
       responseObserver.onCompleted();
     }
-    catch(IllegalArgumentException e)
+    catch(Exception e)
     {
       Status error = Status.newBuilder().setCode(Code.INVALID_ARGUMENT_VALUE).setMessage(e.getMessage()).build();
       responseObserver.onError(StatusProto.toStatusRuntimeException(error));
@@ -44,18 +44,26 @@ public class SlaughterhouseInfoRetrieverImpl
   @Override public void getProductsFromAnimalB(RequestB request,
       io.grpc.stub.StreamObserver<ResponseB> responseObserver)
   {
-    ArrayList<Product> products = persistence.getProductsFromAnimal(
-        request.getRegNo());
+    try
+    {
+      ArrayList<Product> products = base.getProductsFromAnimalB(request.getRegNo());
 
-    ResponseB.Builder responseBuilder = ResponseB.newBuilder();
+      ResponseB.Builder responseBuilder = ResponseB.newBuilder();
 
-    for (Product product : products)
-      responseBuilder.addProduct(ProductModelGrpcConverter.ToProto(product));
+      for (Product product : products)
+        responseBuilder.addProduct(ProductModelGrpcConverter.ToProto(product));
 
-    ResponseB response = responseBuilder.build();
+      ResponseB response = responseBuilder.build();
 
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+    }
+    catch(Exception e)
+    {
+      Status error = Status.newBuilder().setCode(Code.INVALID_ARGUMENT_VALUE).setMessage(e.getMessage()).build();
+      responseObserver.onError(StatusProto.toStatusRuntimeException(error));
+    }
+
   }
 
 }

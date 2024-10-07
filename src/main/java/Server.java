@@ -1,10 +1,11 @@
 import persistence.DatabaseHelper;
-import persistence.DatabasePersistence;
 import persistence.IPersistence;
 import io.grpc.ServerBuilder;
+import persistence.SlaughterhouseDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 
 public class Server
 {
@@ -15,12 +16,13 @@ public class Server
         "jdbc:postgresql://localhost:5432/slaughterhouse?currentSchema=slaughterhouse_schema",
         "postgres", "344692StupidPass");
 
-    IPersistence db = new DatabasePersistence(helper);
+    IPersistence dao = new SlaughterhouseDao(helper);
 
-    SlaughterHouseInfoRetrieverGrpc.SlaughterHouseInfoRetrieverImplBase grpc = new SlaughterhouseInfoRetrieverImpl(db);
+    SlaughterhouseBase base = new SlaughterhouseBase(dao);
 
-    io.grpc.Server server = ServerBuilder.forPort(9090).addService(grpc)
-        .build();
+    SlaughterHouseInfoRetrieverGrpc.SlaughterHouseInfoRetrieverImplBase grpc = new SlaughterhouseInfoRetrieverImpl(base);
+
+    io.grpc.Server server = ServerBuilder.forPort(9090).addService(grpc).build();
     server.start();
     System.out.println("Server running");
 

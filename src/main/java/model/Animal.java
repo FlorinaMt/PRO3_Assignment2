@@ -3,9 +3,9 @@ package model;
 public class Animal
 {
 
-  private long animalRegNo;
-  private String animalType;
-  private int weightKilos, weightGrams;
+  private final long animalRegNo;
+  private final String animalType;
+  private final int weightKilos, weightGrams;
 
   public Animal(long animalId, String animalType, int weightKilos,
       int weightGrams)

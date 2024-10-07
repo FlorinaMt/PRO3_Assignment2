@@ -9,11 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DatabasePersistence implements IPersistence
+public class SlaughterhouseDao implements IPersistence
 {
   private final DatabaseHelper helper;
 
-  public DatabasePersistence(DatabaseHelper helper)
+  public SlaughterhouseDao(DatabaseHelper helper)
   {
     this.helper = helper;
   }
