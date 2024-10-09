@@ -1,3 +1,7 @@
+package grpc;
+
+import proto.*;
+
 public class AnimalModelGrpcConverter
 {
   public static Animal ToProto(model.Animal animal)

@@ -1,14 +1,19 @@
+package grpc;
+
 import com.google.rpc.Code;
 import com.google.rpc.Status;
+import grpc.AnimalModelGrpcConverter;
+import grpc.ProductModelGrpcConverter;
+import grpc.SlaughterhouseBase;
 import io.grpc.protobuf.StatusProto;
-import persistence.IPersistence;
 import model.Animal;
 import model.Product;
+import proto.*;
 
 import java.util.ArrayList;
 
 public class SlaughterhouseInfoRetrieverImpl
-    extends SlaughterHouseInfoRetrieverGrpc.SlaughterHouseInfoRetrieverImplBase
+    extends SlaughterhouseInfoRetrieverGrpc.SlaughterhouseInfoRetrieverImplBase
 {
   private final SlaughterhouseBase base;
 

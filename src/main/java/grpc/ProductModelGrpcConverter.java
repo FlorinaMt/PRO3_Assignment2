@@ -1,3 +1,6 @@
+package grpc;
+
+import proto.*;
 public class ProductModelGrpcConverter
 {
   public static Product ToProto(model.Product product)

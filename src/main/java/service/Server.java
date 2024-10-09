@@ -1,11 +1,15 @@
+package service;
+
+import grpc.SlaughterhouseBase;
+import grpc.SlaughterhouseInfoRetrieverImpl;
 import persistence.DatabaseHelper;
 import persistence.IPersistence;
 import io.grpc.ServerBuilder;
 import persistence.SlaughterhouseDao;
+import proto.SlaughterhouseInfoRetrieverGrpc;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 
 public class Server
 {
@@ -20,7 +24,7 @@ public class Server
 
     SlaughterhouseBase base = new SlaughterhouseBase(dao);
 
-    SlaughterHouseInfoRetrieverGrpc.SlaughterHouseInfoRetrieverImplBase grpc = new SlaughterhouseInfoRetrieverImpl(base);
+    SlaughterhouseInfoRetrieverGrpc.SlaughterhouseInfoRetrieverImplBase grpc = new SlaughterhouseInfoRetrieverImpl(base);
 
     io.grpc.Server server = ServerBuilder.forPort(9090).addService(grpc).build();
     server.start();
